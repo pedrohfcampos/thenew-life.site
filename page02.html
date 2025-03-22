@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://track.daily-newshealth.site/track.js"></script>
+    <script type="text/javascript" src="https://track.daily-newshealth.site/track.js?rtkcmpid=67d3413c6dd49aa6ee0d2cda"></script>
+    
+    <script>
+    // Obtém os parâmetros da URL
+    const params = new URLSearchParams(window.location.search),
+        clickid = params.get("rtkcid"),
+        rdtk_event_id = params.get("ip");
+
+    function startOfferTimer() {
+        console.log('startOfferTimer iniciado');
+        var e, t;
+        const offerTimerElements = document.querySelectorAll(".offer-timer-count");
+        let o = 1800; // Tempo em segundos (30 minutos)
+
+        if (offerTimerElements.length === 0) {
+            console.log("Nenhum elemento encontrado com a classe 'offer-timer-count'");
+            return;
+        }
+
+        // Seleciona todas as tags H1 dentro de .offer-timer-count
+        const h1Elements = document.querySelectorAll(".offer-timer-count h1");
+
+        if (h1Elements.length === 0) {
+            console.log("Nenhum elemento <h1> encontrado dentro de 'offer-timer-count'");
+        }
+
+        var r = setInterval(function() {
+            e = parseInt(o / 60, 10);
+            t = parseInt(o % 60, 10);
+            e = e < 10 ? "0" + e : e;
+            t = t < 10 ? "0" + t : t;
+
+            // Atualiza o conteúdo das .offer-timer-count
+            offerTimerElements.forEach(function(element) { 
+                element.innerHTML = "<h1>" +e + ":" + t+"</h1>";
+            });
+
+            // Atualiza o conteúdo das tags H1 dentro de .offer-timer-count
+            h1Elements.forEach(function(h1) {
+                h1.textContent = `Oferta expira em ${e}:${t}`;
+            });
+
+            console.log(`Timer atualizado: ${e}:${t}`);
+            --o < 0 && (clearInterval(r), console.log("Timer finalizado"));
+        }, 1000);
+    }
+
+    function displayOnPitch() {
+        startOfferTimer();
+        document.querySelectorAll(".display-on-pitch").forEach(element => {
+            element.classList.remove("display-on-pitch");
+        });
+        const scrollElement = document.querySelector(".scroll-on-pitch");
+
+        if (scrollElement) {
+            scrollElement.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+
+        // Aqui você pode adicionar quaisquer outras ações necessárias para "abrir todas as páginas"
+    }
+
+    if (clickid) {
+        let e = {
+            view: `https://track.thenew-health.online/postback?clickid=${encodeURIComponent(clickid)}&rdtk_event_id=${encodeURIComponent(rdtk_event_id)}&type=VSL%20View`,
+            play: `https://track.thenew-health.online/postback?clickid=${encodeURIComponent(clickid)}&rdtk_event_id=${encodeURIComponent(rdtk_event_id)}&type=VSL%20-%20Play`,
+            view3s: `https://track.thenew-health.online/postback?clickid=${encodeURIComponent(clickid)}&rdtk_event_id=${encodeURIComponent(rdtk_event_id)}&type=VSL%20-%203%20View`,
+            view60s: `https://track.thenew-health.online/postback?clickid=${encodeURIComponent(clickid)}&rdtk_event_id=${encodeURIComponent(rdtk_event_id)}&type=VSL%20-%2060%20View`,
+            view120s: `https://track.thenew-health.online/postback?clickid=${encodeURIComponent(clickid)}&rdtk_event_id=${encodeURIComponent(rdtk_event_id)}&type=VSL%20-%20120%20View`,
+            view300s: `https://track.thenew-health.online/postback?clickid=${encodeURIComponent(clickid)}&rdtk_event_id=${encodeURIComponent(rdtk_event_id)}&type=VSL%20-%20300%20View`,
+            pitchView: `https://track.thenew-health.online/postback?clickid=${encodeURIComponent(clickid)}&rdtk_event_id=${encodeURIComponent(rdtk_event_id)}&type=VSL%20-%20Pitch%20View`,
+            leadview: `https://track.thenew-health.online/postback?clickid=${encodeURIComponent(clickid)}&rdtk_event_id=${encodeURIComponent(rdtk_event_id)}&type=VSL%20-%20Lead%20View`
+        };
+
+        window.addEventListener("DOMContentLoaded", function() {
+        fetch(e.view);
+        const pitchViewFlag = localStorage.getItem("pitchView");
+        if (pitchViewFlag === "true") {
+            console.log("Pitch View previamente visualizado. Abrindo todas as seções.");
+            displayOnPitch();
+          }
+        });
+
+
+        window.addEventListener("message", function(t) {
+            if (t.data === "VSL View") {
+                fetch(e.view);
+                console.log("VSL View");
+            }
+            if (t.data === "VSL - Lead View") {
+                fetch(e.leadview);
+                console.log("VSL - Lead View");
+            }
+            if (t.data === "VSL - Play") {
+                fetch(e.play);
+                document.querySelectorAll('.hide-on-play').forEach(function(element) {element.style.display = 'none';});
+                                document.body.style.backgroundColor = '#000000';
+                console.log("VSL - Play");
+            }
+            if (t.data === "VSL - 3 View") {
+                fetch(e.view3s);
+                console.log("VSL - 3 View");
+            }
+            if (t.data === "VSL - 60 View") {
+                fetch(e.view60s);
+                console.log("VSL - 60 View");
+            }
+            if (t.data === "VSL - 120 View") {
+                fetch(e.view120s);
+                console.log("VSL - 120 View");
+            }
+            if (t.data === "VSL - 300 View") {
+                fetch(e.view300s);
+                console.log("VSL - 300 View");
+            }
+            if (t.data === "VSL - Pitch View") {
+                // Armazena a flag no localStorage
+                localStorage.setItem("pitchView", "true");
+                                
+                fetch(e.pitchView);
+                console.log("VSL - Pitch View");
+                                
+                // Executa as ações para abrir todas as seções
+                displayOnPitch();
+            }
+        });
+    } else {
+        console.log("Missing clickid");
+    } 
+</script>
+
+    <title>Page One</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #000000;
+        }
+
+        h1 {
+            font-size: 25px;
+            padding-inline: 20px;
+        }
+
+        header, footer {
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .timer {
+            font-family: Arial, sans-serif;
+            font-size: 22px;
+            margin: 10px 0 20px;
+            font-weight: bold;
+            text-align: center;
+            color: rgb(255, 255, 255);
+            padding-inline: 15px;
+            display: none;
+        }
+
+        .time {
+            color: red;
+        }
+
+        header {
+            background-color: #000000;
+        }
+
+        main {
+            flex: 1;
+            padding-bottom: 35%;
+            padding-top: -5px;
+            padding-inline: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center !important;
+            justify-content: center;
+            background-color: #000000;
+        }
+
+        h1 {
+            font-size: 20px;
+            padding-inline: 20px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+            background-color: #000000;
+        }
+
+        .oi {
+            color: red;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center; /* Alinha horizontalmente ao centro */
+            align-items: center; /* Alinha verticalmente ao centro */
+            height: 100vh; /* Usa 100% da altura da viewport */
+        }
+
+        .image-container {
+            display: flex !important;
+            justify-content: center; /* Alinha horizontalmente ao centro */
+        }
+
+        button {
+            padding: 10px 20px; /* Adiciona um pouco de padding ao botão */
+            font-size: 16px; /* Aumenta um pouco o tamanho da fonte */
+            cursor: pointer; /* Muda o cursor para indicar que é clicável */
+            background-color: green;
+            border-color: green;
+        }
+
+        a {
+            text-decoration: none; /* Remove o sublinhado do link */
+            color: rgb(0, 0, 0);
+        }
+
+        img {
+            max-width: 100%;
+            padding-bottom: 50%;
+        }
+
+        .rodape {
+            font-size: 8px;
+            padding-right: 10%;
+            padding-left: 10%;
+        }
+
+        .container-2 {
+            display: flex;
+            font-size: 10px;
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+            height: 100px; /* Altura do container */
+        }
+
+        .footer-link {
+            flex: 1; /* Faz cada link ocupar o mesmo espaço */
+            text-align: center; /* Centraliza o texto dentro de cada bloco */
+            padding: 10px; /* Espaçamento interno para os links */
+            border-right: 1px solid rgb(255, 0, 0); /* Adiciona uma borda à direita */
+        }
+
+        .footer-link:last-child {
+            border-right: none; /* Remove a borda do último item */
+        }
+
+        /* Estilos responsivos para Desktop */
+        @media (min-width: 768px) {
+            main {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            img {
+                max-width: 100%;
+                padding-bottom: 50%;
+            }
+            .rodape {
+                font-size: 10px;
+                padding-right: 20%;
+                padding-left: 20%;
+            }
+            .container {
+                padding-top: 30px;
+                padding-bottom: 50px;
+            }
+            p {
+                align-items: center;
+                text-align: center;
+                font-size: 20px;
+                padding-top: -15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+<div id="vid_67deabddbbdcf5aa029dcd14" style="position: relative; width: 100%; padding: 177.03703703703704% 0 0;"> <img id="thumb_67deabddbbdcf5aa029dcd14" src="https://images.converteai.net/dc2bee22-f6b3-41ae-b28c-3a61aaac8be4/players/67deabddbbdcf5aa029dcd14/thumbnail.jpg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block;" alt="thumbnail"> <div id="backdrop_67deabddbbdcf5aa029dcd14" style=" -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); position: absolute; top: 0; height: 100%; width: 100%; "></div> </div> <script type="text/javascript" id="scr_67deabddbbdcf5aa029dcd14"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/dc2bee22-f6b3-41ae-b28c-3a61aaac8be4/players/67deabddbbdcf5aa029dcd14/player.js", s.async=!0,document.head.appendChild(s); </script>
+    </main>
+    <footer>
+        <div class="rodape">
+            Copyright 2024. All rights reserved.
+            <br><br>
+        </div>  
+    </footer>
+    <script>
+    (function(window) {
+        window.onpopstate = function() {
+            // Recuperar os subIDs do localStorage
+            let subid = localStorage.getItem('subid') || '';
+            let subid2 = localStorage.getItem('subid2') || '';
+            let subid3 = localStorage.getItem('subid3') || '';
+            let subid4 = localStorage.getItem('subid4') || '';
+            let subid5 = localStorage.getItem('subid5') || '';
+
+            // Criar a URL de redirecionamento com os subIDs
+            let redirectUrl = new URL("https://track.thenew-health.online/67b8b1458c2a87aba2230853?utm_campaign={replace}&sub2={keyword}&sub3={matchtype}&sub4={adgroupid}&sub5={creative}&sub6={campaignid}&sub7={device}&sub8={adposition}&sub9={network}&sub10={placement}&utm_source=Google&wbraid={wbraid}&gbraid={gbraid}&adgroup={_cj}&creative={_ad}&ref_id={gclid}");
+            if (subid) redirectUrl.searchParams.set('subid', subid);
+            if (subid2) redirectUrl.searchParams.set('subid2', subid2);
+            if (subid3) redirectUrl.searchParams.set('subid3', subid3);
+            if (subid4) redirectUrl.searchParams.set('subid4', subid4);
+            if (subid5) redirectUrl.searchParams.set('subid5', subid5);
+
+            // Redirecionar para a nova URL com subIDs
+            window.location.href = redirectUrl.toString();
+        };
+        window.history.pushState({}, '');
+    })(window);
+</script>
+</body>
+</html>
