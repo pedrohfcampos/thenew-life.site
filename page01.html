@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Suplement Serene</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Calm your wellness routine with our soothing Suplement combo!" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f0f7ff; /* Very light blue for a serene background */
+            font-family: 'Roboto', sans-serif;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            background-image: linear-gradient(to bottom, #ffffff, #cce7ff); /* Gradient from white to light blue */
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .confirmation-box {
+            padding: 20px;
+            background-color: #ffffff; /* Pure white for clarity and focus */
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .confirmation-text {
+            font-size: 24px;
+            color: #0077B5; /* Soft blue for text, calming and inviting */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #00aaff; /* Vibrant light blue for the button, lively yet soothing */
+            border: none;
+            padding: 15px 45px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0088cc; /* A deeper shade of blue for hover, enhancing user interaction */
+        }
+
+        #timer {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333333; /* Medium gray for a subtle emphasis */
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #0055aa; /* Dark blue for a solid, grounding footer */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .disclaimer {
+            font-size: 12px;
+            margin-top: 10px;
+            line-height: 1.5;
+            color: #ccc; /* Light grey for a less obtrusive disclaimer text */
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="confirmation-box">
+            <p class="confirmation-text">Click WATCH NOW if You Have +40</p>
+            <a href="https://thenew-life.site/page02">
+            <button class="btn" id="proceedButton">WATCH NOW</button>
+        </a>
+            <br><br>
+            <span id="timer">Access in 15 seconds</span>
+        </div>
+    </main>
+    <script>
+        // Timer Countdown
+        let timeLeft = 15;
+        const timerElement = document.getElementById("timer");
+  
+        function updateTimer() {
+          if (timeLeft > 0) {
+            timeLeft--;
+            timerElement.textContent = `Access in ${timeLeft} seconds`;
+          } else {
+            clearInterval(timerInterval);
+            timerElement.textContent = "Access expiring...";
+          }
+        }
+  
+        let timerInterval = setInterval(updateTimer, 1000);
+      </script>
+  
+  <script>
+          // Attach URL parameters to the redirect link
+          document.addEventListener('DOMContentLoaded', function() {
+              var proceedButton = document.querySelector('a');
+              var currentUrlParams = new URLSearchParams(window.location.search);
+  
+              var newHref = proceedButton.href;
+              if (!newHref.includes('?')) {
+                  newHref += '?';
+              } else {
+                  newHref += '&';
+              }
+  
+              currentUrlParams.forEach(function(value, key) {
+                  newHref += `${encodeURIComponent(key)}=${encodeURIComponent(value)}&`;
+              });
+              newHref = newHref.slice(0, -1); // Remove the last '&'
+              proceedButton.href = newHref;
+          });
+      </script>
+    <footer>
+        <div>Copyright 2024 - The Man Health ©</div>
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Disclaimer</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="disclaimer">
+            This site is not a part of the YouTube website or YouTube Inc. Additionally, This site is NOT endorsed by YouTube in any way. YOUTUBE is a trademark of YOUTUBE, Inc.
+        </div>
+    </footer>
+</body>
+</html>
